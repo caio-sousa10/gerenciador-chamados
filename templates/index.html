@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chamados TI</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <h1>Chamados TI</h1>
+    <form action="/cadastrar" method="POST">
+        <label for="tipo">Tipo:</label>
+        <input type="text" id="tipo" name="tipo" required>
+        
+        <label for="observacao">Observação:</label>
+        <textarea id="observacao" name="observacao"></textarea>
+        
+        <button type="submit">Cadastrar Chamado</button>
+    </form>
+
+    <h2>Chamados Pendentes</h2>
+    <table>
+        <tr>
+            <th>ID</th>
+            <th>Tipo</th>
+            <th>Data</th>
+            <th>Observação</th>
+            <th>Status</th>
+            <th>Ações</th>
+        </tr>
+        {% for chamado in chamados_pendentes %}
+        <tr>
+            <td>{{ chamado[0] }}</td>
+            <td>{{ chamado[1] }}</td>
+            <td>{{ chamado[2] }}</td>
+            <td>{{ chamado[3] }}</td>
+            <td>{{ chamado[4] }}</td>
+            <td>
+                <a href="{{ url_for('marcar_como_feito', chamado_id=chamado[0]) }}">Marcar como Feito</a>
+                <a href="{{ url_for('excluir_chamado', chamado_id=chamado[0]) }}">Excluir</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+
+    <h2>Chamados Feitos</h2>
+    <table>
+        <tr>
+            <th>ID</th>
+            <th>Tipo</th>
+            <th>Data</th>
+            <th>Observação</th>
+            <th>Status</th>
+            <th>Ações</th>
+        </tr>
+        {% for chamado in chamados_feitos %}
+        <tr>
+            <td>{{ chamado[0] }}</td>
+            <td>{{ chamado[1] }}</td>
+            <td>{{ chamado[2] }}</td>
+            <td>{{ chamado[3] }}</td>
+            <td>{{ chamado[4] }}</td>
+            <td>
+                <a href="{{ url_for('excluir_chamado', chamado_id=chamado[0]) }}">Excluir</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+
+    <footer>
+        <p>© 2025 Chamados TI - Caio Sousa. Todos os Direitos Reservados.</p>
+    </footer>
+</body>
+</html>
